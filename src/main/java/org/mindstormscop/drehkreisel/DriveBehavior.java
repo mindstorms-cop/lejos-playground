@@ -4,14 +4,14 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.subsumption.Behavior;
 
-public class DrehBehavior implements Behavior {
+public class DriveBehavior implements Behavior {
     private boolean suppressed = false;
     private EV3LargeRegulatedMotor leftWheel;
     private EV3LargeRegulatedMotor rightWheel;
 
-    public DrehBehavior() {
-        leftWheel = new EV3LargeRegulatedMotor(MotorPort.A);
-        rightWheel = new EV3LargeRegulatedMotor(MotorPort.C);
+    public DriveBehavior(EV3LargeRegulatedMotor leftWheel, EV3LargeRegulatedMotor rightWheel) {
+        this.leftWheel = leftWheel;
+        this.rightWheel = rightWheel;
     }
 
     @Override
@@ -25,15 +25,15 @@ public class DrehBehavior implements Behavior {
 
         leftWheel.setAcceleration(500);
         rightWheel.setAcceleration(500);
-
-        System.out.printf("Speeding up to %f", leftWheel.getMaxSpeed());
+        leftWheel.setSpeed(250);
+        rightWheel.setSpeed(250);
 
         leftWheel.forward();
-        rightWheel.backward();
+        rightWheel.forward();
         while( !suppressed )
             Thread.yield();
-        leftWheel.flt(true); // clean up
-        rightWheel.flt(true);
+        leftWheel.stop(true);
+        rightWheel.stop(true);
     }
 
     @Override
