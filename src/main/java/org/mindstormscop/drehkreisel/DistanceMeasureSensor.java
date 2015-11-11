@@ -10,8 +10,8 @@ public class DistanceMeasureSensor{
     private SampleProvider sp;
     private float distance;
 
-    public DistanceMeasureSensor(float distance) {
-        EV3UltrasonicSensor sensor = new EV3UltrasonicSensor(SensorPort.S3);
+    public DistanceMeasureSensor(EV3UltrasonicSensor uvSensor, float distance) {
+        EV3UltrasonicSensor sensor = uvSensor;
         sp = sensor.getDistanceMode();
         this.distance = distance;
     }

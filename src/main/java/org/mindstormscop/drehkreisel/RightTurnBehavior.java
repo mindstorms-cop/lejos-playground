@@ -2,6 +2,7 @@ package org.mindstormscop.drehkreisel;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.subsumption.Behavior;
 
 public class RightTurnBehavior implements Behavior {
@@ -10,8 +11,8 @@ public class RightTurnBehavior implements Behavior {
     private EV3LargeRegulatedMotor leftWheel;
     private EV3LargeRegulatedMotor rightWheel;
 
-    public RightTurnBehavior(EV3LargeRegulatedMotor leftWheel, EV3LargeRegulatedMotor rightWheel, float distance) {
-        sensor = new DistanceMeasureSensor(distance);
+    public RightTurnBehavior(EV3LargeRegulatedMotor leftWheel, EV3LargeRegulatedMotor rightWheel, EV3UltrasonicSensor uvSensor, float distance) {
+        sensor = new DistanceMeasureSensor(uvSensor, distance);
         this.leftWheel = leftWheel;
         this.rightWheel = rightWheel;
     }

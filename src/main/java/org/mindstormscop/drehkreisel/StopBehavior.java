@@ -1,5 +1,6 @@
 package org.mindstormscop.drehkreisel;
 
+import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.subsumption.Behavior;
 
 import java.util.Date;
@@ -7,8 +8,8 @@ import java.util.Date;
 public class StopBehavior implements Behavior {
     DistanceMeasureSensor sensor;
 
-    public StopBehavior(float distance) {
-        sensor = new DistanceMeasureSensor(distance);
+    public StopBehavior(EV3UltrasonicSensor uvSensor, float distance) {
+        sensor = new DistanceMeasureSensor(uvSensor, distance);
     }
 
     @Override
