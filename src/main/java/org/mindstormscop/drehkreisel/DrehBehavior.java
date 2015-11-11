@@ -22,6 +22,14 @@ public class DrehBehavior implements Behavior {
     @Override
     public void action() {
         suppressed = false;
+
+        leftWheel.setAcceleration(2000);
+        rightWheel.setAcceleration(2000);
+        leftWheel.setSpeed(leftWheel.getMaxSpeed());
+        rightWheel.setSpeed(rightWheel.getMaxSpeed());
+
+        System.out.printf("Speeding up to %f", leftWheel.getMaxSpeed());
+
         leftWheel.forward();
         rightWheel.backward();
         while( !suppressed )
