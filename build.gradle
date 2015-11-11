@@ -25,9 +25,9 @@ sourceSets {
 }
 repositories {
 	mavenCentral()
-     flatDir {
-       dirs  '/usr/local/Cellar/lejos-ev3/0.9.0-beta/lib/ev3'
-   }
+    flatDir {
+        dirs  '/usr/local/Cellar/lejos-ev3/0.9.0-beta/lib/ev3'
+    }
 }
 
 dependencies {
