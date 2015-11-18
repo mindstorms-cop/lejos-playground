@@ -1,45 +1,61 @@
-apply plugin: 'java'
-apply plugin: 'application'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath 'com.github.mindstorms-cop:lejos-ev3-gradle-plugin:0.1.2'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+}
+apply plugin: 'org.mindstormscop.lejosev3'
 
 sourceCompatibility = 1.7
+targetCompatibility = 1.7
 version = '1.0'
 compileJava.options.encoding = 'UTF-8'
 mainClassName = 'org.mindstormscop.drehkreisel.Main'
 
-jar {
-  manifest {
-      attributes 'Implementation-Title': 'Gradle Lego/Lejos Mindstorms EV3 Example Project', 'Implementation-Version': version, 'Main-Class': mainClassName
-  }
-  // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+shadowJar {
+    baseName = 'playground'
+    classifier = ''
+}
+
+ev3 {
+    discoverBrick = false
+    host = '10.0.1.1'
+    port = 22
+    user = 'root'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 configurations {
-	provided
+    provided
 }
 
 sourceSets {
     main.compileClasspath += configurations.provided
-    test.compileClasspath += configurations.provided
-    test.runtimeClasspath += configurations.provided
 }
-repositories {
-	mavenCentral()
-    flatDir {
-        dirs  '/usr/local/Cellar/lejos-ev3/0.9.0-beta/lib/ev3'
-    }
+
+idea.module {
+    scopes.PROVIDED.plus += [configurations.provided]
 }
 
 dependencies {
-    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
-    provided group: 'lejos', name: 'ev3classes', version: '1.0'
-    testCompile group: 'junit', name: 'junit', version: '4.+'
-}
-
-test {
-    systemProperties 'property': 'value'
+    provided 'com.github.mindstorms-cop.lejos-ev3-maven-packages:ev3classes:0.9.1-beta.+'
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.8'
 }
+
