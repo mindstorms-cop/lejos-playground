@@ -1,7 +1,6 @@
 package org.mindstormscop.drehkreisel;
 
 
-import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.SampleProvider;
 
@@ -11,14 +10,22 @@ public class DistanceMeasureSensor{
     private float distance;
 
     public DistanceMeasureSensor(EV3UltrasonicSensor uvSensor, float distance) {
-        EV3UltrasonicSensor sensor = uvSensor;
-        sp = sensor.getDistanceMode();
+
+        sp = uvSensor.getDistanceMode();
         this.distance = distance;
     }
 
     public boolean check() {
+        float d = getDistance();
+        System.out.printf("Distance: %f <? %f\n", d, distance);
+
+        return d < distance;
+    }
+
+    public float getDistance() {
         float[] sample = new float[sp.sampleSize()];
         sp.fetchSample(sample, 0);
-        return sample[0] < distance;
+
+        return sample[0];
     }
 }
